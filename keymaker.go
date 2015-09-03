@@ -1,18 +1,24 @@
 package main
 
 import (
-	"flag"
+	"bufio"
 	"fmt"
 	"github.com/FactomProject/factoid"
 	"github.com/FactomProject/factoid/wallet"
+	"os"
 	"strings"
 )
 
 func main() {
-	flag.Parse()
-	args := flag.Args()
 
-	if len(args) == 1 || len(args) == 12 {
+	r := bufio.NewScanner(os.Stdin)
+
+	fmt.Print("Enter 12 words from Koinify here: ")
+	r.Scan()
+	line := r.Text()
+	args := strings.Fields(string(line))
+
+	if len(args) == 12 {
 
 		mnemonic := ""
 		for _, v := range args {
@@ -22,6 +28,8 @@ func main() {
 		mnemonic = strings.TrimSpace(mnemonic)
 		private, err := wallet.MnemonicStringToPrivateKey(mnemonic)
 		if err != nil {
+			fmt.Print("\n\nThere was a problem with the 12 words you entered. Please check spelling against this list:\n")
+			fmt.Print("https://github.com/FactomProject/go-bip39/blob/master/wordlist.go\n\n\n\n")
 			panic(err)
 		}
 		pub, priv, err := wallet.GenerateKeyFromPrivateKey(private)
@@ -38,18 +46,11 @@ func main() {
 		address, _ := we.GetAddress()
 
 		adr := factoid.ConvertFctAddressToUserStr(address)
-		//fmt.Printf("adr %v\n", adr)
 
-		//fmt.Printf("%v\n", adr)
-		fmt.Printf("\n\nFactoid Address: %v       <---- Use this to check your balance at http://explorer.factom.org/\n", adr)
+		fmt.Printf("\nFactoid Address: %v\n", adr)
+		fmt.Printf("\nCheck your balance at http://explorer.factom.org/\n")
 	} else {
-		if len(args) != 0 {
-			fmt.Printf("\n\nError: Invalid number of arguments passed.\n")
-		}
-		fmt.Printf("\n\n\tFactom Mnemonic Converter\n")
-		fmt.Printf("\nUsage: Run this program with your 12 word mnemonic private key passed in the command line.\n" +
-			"It will print out your private and public keys as well as your Factom address.\n" +
-			"You can use that address to check your account balance at http://explorer.factom.org/ .\n")
+		fmt.Printf("\n\nError: 12 and only 12 words are expected.\n")
 	}
 
 }
