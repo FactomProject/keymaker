@@ -38,9 +38,10 @@ func main() {
 		address, _ := we.GetAddress()
 
 		adr := factoid.ConvertFctAddressToUserStr(address)
+		//fmt.Printf("adr %v\n", adr)
 
-		fmt.Printf("%v\n", adr)
-		fmt.Printf("Private key (keep secret): %x\nPublic key: %x\nFactoid Address: %v       <---- Use this to check your balance at http://explorer.factom.org/\n", priv, pub, adr)
+		//fmt.Printf("%v\n", adr)
+		fmt.Printf("\n\nFactoid Address: %v       <---- Use this to check your balance at http://explorer.factom.org/\n", adr)
 	} else {
 		if len(args) != 0 {
 			fmt.Printf("\n\nError: Invalid number of arguments passed.\n")
