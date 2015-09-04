@@ -3,7 +3,7 @@ Factom Keymaker Setup Guide
 
 ### How to Check Your Factoid Balance 
 
-Here is a step by step guide to check your Factoid balance for Mac, Linux, and Windows with our new app, Factom Keymaker. Note that you will require your Koinify wallet 12 digit passphrase to get your Factoid Address with our keymaker.
+Here is a step by step guide to check your Factoid balance for Mac, Linux, and Windows with our new app, Factom Keymaker. Note that you will require your Koinify wallet 12 word passphrase to get your Factoid Address with our keymaker.
 
 **Step #1** - Go to Factom’s Keymaker repository on [GitHub](https://github.com/FactomProject/keymaker/tree/master/bin). There you will find binaries for [Windows](https://github.com/FactomProject/keymaker/raw/master/bin/keymaker.exe), [Mac](https://github.com/FactomProject/keymaker/raw/master/bin/keymaker-mac), and [Linux](https://github.com/FactomProject/keymaker/raw/master/bin/keymaker-linux).
 
