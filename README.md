@@ -11,14 +11,17 @@ Here is a step by step guide to check your Factoid balance for Mac, Linux, and W
 
 **Step #3** - Save it to a folder of your choice on your local hard drive. 
 
-**Step #4** - Pick the instructions for your OS.####Linux
+**Step #4** - Pick the instructions for your OS.
+
+####Linux
 
 Locate the keymaker-linux file you just downloaded in your terminal. We need to first assign execute privileges to the executable by typing the following command:
 ```
 chmod 775 keymaker-linux
 ```
-![Keymaker1.png](/images/Keymaker1.png)
-Then type the following command to run the keymaker program:
+![Keymaker1.png](images/Keymaker1.png)
+
+Then type the following command to run the keymaker program:
 ```
 ./keymaker-linux
 ```
@@ -41,13 +44,18 @@ Scroll down to continue on to Step #5
 #### Mac
 
 Locate the keymaker-mac app you just downloaded with the Finder and your mouse. We need to first assign execute privileges to the app so open a Terminal window (located in /Applications/Utilities/Terminal.app) and type:
-```chmod 775```Then drag and drop the keymaker-mac app to the Terminal window. You should see the below displayed in Terminal. Hit enter after that.
+```
+chmod 775
+```
+Then drag and drop the keymaker-mac app to the Terminal window. You should see the below displayed in Terminal. Hit enter after that.
 
 ![Keymaker6.png](/images/Keymaker6.png)
 
 Then double click the keymaker-mac app, when the app launches you will be prompted to enter your 12 words Koinify passphrase.
 
-![Keymaker7.png](/images/Keymaker7.png)Enter your 12 words Koinify passphrase and hit enter.
+![Keymaker7.png](/images/Keymaker7.png)
+
+Enter your 12 words Koinify passphrase and hit enter.
 
 ![Keymaker8.png](/images/Keymaker8.png)
 
@@ -61,7 +69,8 @@ Copy the Factoid Address that is shown in the Terminal window by selecting the t
 
 Scroll down to continue on to Step #5
 
-#### WindowsOpen a command prompt (CMD.exe) and browse to the folder that contains keymaker.exe, for example, by typing: C: (or whatever letter your hard drive is); then you can type:
+#### Windows
+Open a command prompt (CMD.exe) and browse to the folder that contains keymaker.exe, for example, by typing: C: (or whatever letter your hard drive is); then you can type:
 ```
 cd c:\Users\YourUsername\Desktop\
 ```
@@ -71,7 +80,9 @@ If you can’t locate the keymaker.exe this way, just locate it with Windows Exp
 
 Once the file has been located in your CMD window simply hit enter and the app should run.
 
-When the app launches you will be prompted to enter your 12 words Koinify Passphrase.![Keymaker12.png](/images/Keymaker12.png)
+When the app launches you will be prompted to enter your 12 words Koinify Passphrase.
+
+![Keymaker12.png](/images/Keymaker12.png)
 
 Enter your 12 words Koinify passphrase and hit enter.
 
@@ -81,7 +92,9 @@ You should then see your Factoid Address displayed.
 
 ![Keymaker14.png](/images/Keymaker14.png)
 
-Copy the Factoid Address that is shown in the CMD window by selecting the text with your mouse then right click on the top bar then select Edit/Copy.![Keymaker15.png](/images/Keymaker15.png)
+Copy the Factoid Address that is shown in the CMD window by selecting the text with your mouse then right click on the top bar then select Edit/Copy.
+
+![Keymaker15.png](/images/Keymaker15.png)
 
 **Step #5** - Go to [http://explorer.factom.org](http://explorer.factom.org) and paste your Factoid Address in the search bar.
 
