@@ -1,4 +1,4 @@
-Factom Keymaker Install Guide
+Factom Keymaker Setup Guide
 ==========
 
 ### How to Check Your Factoid Balance 
