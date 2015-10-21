@@ -2,15 +2,15 @@ package main
 
 import (
 	"bufio"
+	"bytes"
+	"encoding/hex"
 	"fmt"
 	"github.com/FactomProject/factoid"
 	"github.com/FactomProject/factoid/wallet"
+	"github.com/FactomProject/go-bip32"
+	"github.com/FactomProject/go-bip39"
 	"os"
 	"strings"
-	"encoding/hex"
-	"bytes"
-	"github.com/FactomProject/go-bip39"
-	"github.com/FactomProject/go-bip32"
 )
 
 func main() {
@@ -31,7 +31,7 @@ func main() {
 		}
 		mnemonic = strings.TrimSpace(mnemonic)
 		err := checkSpellings(args)
-		
+
 		var pub []byte
 		if err == nil {
 			private, err := mnemonicToKey(mnemonic)
@@ -39,7 +39,7 @@ func main() {
 			if err == nil {
 				pub, _, _ = genPrivateKey(private)
 				pubFound = true
-			}else {
+			} else {
 				private, err = mnemonicStringToPrivateKeyWithErrors(mnemonic)
 				if err == nil {
 					fmt.Printf("Checksum failure.\n")
@@ -78,8 +78,7 @@ func main() {
 						fmt.Printf("get in touch with Factom as soon as possible.\n")
 					}
 				}
-				
-				
+
 				inBitcoin := false
 				for _, p := range pubList {
 					//fmt.Printf("%v\n",p)
@@ -103,7 +102,7 @@ func main() {
 			//instead of calling printUnfixed
 			//printUnfixed()
 		}
-	}else {
+	} else {
 		fmt.Printf("\n\nError: 12 and only 12 words are expected.\n")
 	}
 }
@@ -146,7 +145,6 @@ func printPrivateAndPublicHuman(private []byte) {
 	fmt.Printf("\nCheck your balance at http://explorer.factom.org/\n")
 	fmt.Printf("Search for the key that starts with FA...\n")
 }
-
 
 func printPublicHuman(private []byte) {
 
@@ -224,8 +222,6 @@ func genPrivateKey(privateKey []byte) (public []byte, private []byte, err error)
 	public, private, err = wallet.GenerateKeyFromPrivateKey(privateKey)
 	return
 }
-
-
 
 var fixInitList = strings.Split(koinifyFixedInitList, "\n")
 var koinifyFixedInitList = `3b8c380948ee26aa19bf83eea97c029f7640de324730ba3006e8081c0ce54f7f
