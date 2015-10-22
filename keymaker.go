@@ -3,12 +3,15 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"code.google.com/p/go.crypto/ripemd160"
+	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
 	"github.com/FactomProject/factoid"
 	"github.com/FactomProject/factoid/wallet"
 	"github.com/FactomProject/go-bip32"
 	"github.com/FactomProject/go-bip39"
+	"io"
 	"os"
 	"strings"
 )
@@ -16,7 +19,7 @@ import (
 func main() {
 
 	r := bufio.NewScanner(os.Stdin)
-
+	fmt.Print("Keymaker v2.0\n")
 	fmt.Print("Enter 12 words from Koinify here: ")
 	r.Scan()
 	line := r.Text()
@@ -34,6 +37,20 @@ func main() {
 
 		var pub []byte
 		if err == nil {
+			//check to see if this is one of the few which did not have a factoid key specified and koinify couldn't contact afterwards
+			intAddress := mnemonicToInterimAddress(mnemonic)
+			for _, p := range zeroList {
+				pubkey, _ := hex.DecodeString(p)
+				if bytes.Equal(pubkey, intAddress) {
+					fmt.Printf("Your Factoid purchase had some problems. (null pubkey or init)\n")
+					fmt.Printf("pubkeyhash: %x\n", intAddress)
+					fmt.Printf("Your Factoids are being held by the Factom Foundation.\n")
+					fmt.Printf("Please contact Factom to access your Factoids.\n\n")
+					break
+				}
+			}
+
+			//check factoid keys
 			private, err := mnemonicToKey(mnemonic)
 			pubFound := false
 			if err == nil {
@@ -98,9 +115,6 @@ func main() {
 					printPublicHuman(private)
 				}
 			}
-			//Todo: derive the interim bitcoin addresses from bip32 seed to find the people koinify couldn't contact.
-			//instead of calling printUnfixed
-			//printUnfixed()
 		}
 	} else {
 		fmt.Printf("\n\nError: 12 and only 12 words are expected.\n")
@@ -222,6 +236,56 @@ func genPrivateKey(privateKey []byte) (public []byte, private []byte, err error)
 	public, private, err = wallet.GenerateKeyFromPrivateKey(privateKey)
 	return
 }
+
+func mnemonicToInterimAddress(mnemonic string) (pubkeyhash []byte) {
+
+	mnemonic = strings.ToLower(strings.TrimSpace(mnemonic))
+	seed := bip39.NewSeed(mnemonic, "")
+
+	masterKey, err := bip32.NewMasterKey(seed)
+	if err != nil {
+		panic("bip32 error")
+	}
+	child1, _ := masterKey.NewChildKey(bip32.FirstHardenedChild + 7)
+	if err != nil {
+		panic("key derivation error")
+	}
+	child2, err := child1.NewChildKey(bip32.FirstHardenedChild + 1)
+	if err != nil {
+		panic("key derivation error")
+	}
+
+	pub := child2.PublicKey()
+	pub2 := pub.Key
+	pubkeyhash = hash160(pub2)
+	//fmt.Printf("pubkeyhash: %x\n", pubkeyhash)
+	return
+}
+
+func hashRipeMD160(data []byte) []byte {
+	hasher := ripemd160.New()
+	io.WriteString(hasher, string(data))
+	return hasher.Sum(nil)
+}
+
+func hash160(data []byte) []byte {
+	return hashRipeMD160(hashSha256(data))
+}
+
+func hashSha256(data []byte) []byte {
+	hasher := sha256.New()
+	hasher.Write(data)
+	return hasher.Sum(nil)
+}
+
+var zeroList = strings.Split(zeroPubkeyList, "\n")
+var zeroPubkeyList = `66027f514482c8bf9d903b321fa7f90aca0d1180
+b169235abf9d62667aa2c02028e2a7d151e3301e
+f1c81e49db0c7bf98593360bdd431edc7f346733
+8ce70e0ecf5a72e40878960e64dbe267f7851206
+29783bab4bf15624c1992cb478d87f15cb451ed3
+1763492d220c67b3e776325df35949e54766ffd7
+`
 
 var fixInitList = strings.Split(koinifyFixedInitList, "\n")
 var koinifyFixedInitList = `3b8c380948ee26aa19bf83eea97c029f7640de324730ba3006e8081c0ce54f7f
