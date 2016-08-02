@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
-	"code.google.com/p/go.crypto/ripemd160"
+	"golang.org/x/crypto/ripemd160"
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
@@ -119,6 +119,8 @@ func main() {
 	} else {
 		fmt.Printf("\n\nError: 12 and only 12 words are expected.\n")
 	}
+	fmt.Print("Press 'Enter' to continue...")
+	bufio.NewReader(os.Stdin).ReadBytes('\n') 
 }
 
 func mnemonicToKey(mnemonic string) ([]byte, error) {
